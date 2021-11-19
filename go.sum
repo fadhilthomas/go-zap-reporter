@@ -4,8 +4,8 @@ github.com/coreos/go-systemd/v22 v22.3.2/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSV
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/fadhilthomas/go-code-scanning-reporter v0.0.1 h1:r4XpOaehHYvt7NG55NBYi+aHBRvTHp6NCOtaxyVTIcU=
-github.com/fadhilthomas/go-code-scanning-reporter v0.0.1/go.mod h1:frxOgiR4+3+InpEfHSbY3vC61A6CfSVUdpK+qb9THa8=
+github.com/fadhilthomas/go-code-scanning-reporter v0.0.3 h1:nFCyE52Uii8y2aaUDDt6RNhItyRBI9tzRnBoxLrCN60=
+github.com/fadhilthomas/go-code-scanning-reporter v0.0.3/go.mod h1:frxOgiR4+3+InpEfHSbY3vC61A6CfSVUdpK+qb9THa8=
 github.com/godbus/dbus/v5 v5.0.4/go.mod h1:xhWf0FNVPg57R7Z0UbKHbJfkEywrmjJnf7w5xrFpKfA=
 github.com/jomei/notionapi v1.5.3/go.mod h1:wgxFlmxL+oIfxclWkt8jta0PkcBepajish2uCxzBxTo=
 github.com/jomei/notionapi v1.6.0 h1:teTE+IAIvNHKKytpS5x3vlcdd463CP3Hg02lpauBrlY=
