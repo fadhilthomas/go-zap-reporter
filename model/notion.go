@@ -65,7 +65,7 @@ func InsertNotionVulnerability(client *notionapi.Client, vulnerability Vulnerabi
 	databaseId := config.GetStr(config.NOTION_DATABASE)
 
 	vulnerabilityName := strings.TrimSpace(truncateString(vulnerability.Name, 100))
-	vulnerabilityEndpoint := truncateString(vulnerability.Endpoint, 100)
+	vulnerabilityEndpoint := strings.TrimSpace(truncateString(vulnerability.Endpoint, 100))
 
 	pageInsertQuery := &notionapi.PageCreateRequest{
 		Parent: notionapi.Parent{
