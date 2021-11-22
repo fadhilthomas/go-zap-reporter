@@ -3,7 +3,7 @@ module github.com/fadhilthomas/go-zap-reporter
 go 1.17
 
 require (
-	github.com/fadhilthomas/go-code-scanning-reporter v0.0.1
+	github.com/fadhilthomas/go-code-scanning-reporter v0.0.5
 	github.com/jomei/notionapi v1.6.0
 	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.26.0
