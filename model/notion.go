@@ -5,7 +5,6 @@ import (
 	"github.com/fadhilthomas/go-code-scanning-reporter/config"
 	"github.com/jomei/notionapi"
 	"github.com/pkg/errors"
-	"strings"
 )
 
 func OpenNotionDB() (client *notionapi.Client) {
@@ -16,7 +15,6 @@ func OpenNotionDB() (client *notionapi.Client) {
 
 func QueryNotionVulnerabilityName(client *notionapi.Client, vulnerability Vulnerability) (output []notionapi.Page, err error) {
 	databaseId := config.GetStr(config.NOTION_DATABASE)
-	vulnerabilityName := strings.TrimSpace(truncateString(vulnerability.Name, 100))
 
 	var pageList []notionapi.Page
 	var cursor notionapi.Cursor
@@ -27,13 +25,19 @@ func QueryNotionVulnerabilityName(client *notionapi.Client, vulnerability Vulner
 					{
 						Property: "Name",
 						Text: &notionapi.TextFilterCondition{
-							Equals: vulnerabilityName,
+							Equals: vulnerability.Name,
 						},
 					},
 					{
 						Property: "Host",
 						Select: &notionapi.SelectFilterCondition{
 							Equals: vulnerability.Host,
+						},
+					},
+					{
+						Property: "Endpoint",
+						Text: &notionapi.TextFilterCondition{
+							Equals: vulnerability.Endpoint,
 						},
 					},
 				},
@@ -51,17 +55,27 @@ func QueryNotionVulnerabilityName(client *notionapi.Client, vulnerability Vulner
 	return pageList, nil
 }
 
-func QueryNotionVulnerabilityStatus(client *notionapi.Client, vulnerabilityStatus string) (output []notionapi.Page, err error) {
+func QueryNotionVulnerabilityStatus(client *notionapi.Client, vulnerabilityHost string, vulnerabilityStatus string) (output []notionapi.Page, err error) {
 	databaseId := config.GetStr(config.NOTION_DATABASE)
 
 	var pageList []notionapi.Page
 	var cursor notionapi.Cursor
 	for hasMore := true; hasMore; {
 		databaseQueryRequest := &notionapi.DatabaseQueryRequest{
-			PropertyFilter: &notionapi.PropertyFilter{
-				Property: "Status",
-				Select: &notionapi.SelectFilterCondition{
-					Equals: vulnerabilityStatus,
+			CompoundFilter: &notionapi.CompoundFilter{
+				notionapi.FilterOperatorAND: []notionapi.PropertyFilter{
+					{
+						Property: "Host",
+						Select: &notionapi.SelectFilterCondition{
+							Equals: vulnerabilityHost,
+						},
+					},
+					{
+						Property: "Status",
+						Select: &notionapi.SelectFilterCondition{
+							Equals: vulnerabilityStatus,
+						},
+					},
 				},
 			},
 			StartCursor: cursor,
@@ -80,9 +94,6 @@ func QueryNotionVulnerabilityStatus(client *notionapi.Client, vulnerabilityStatu
 func InsertNotionVulnerability(client *notionapi.Client, vulnerability Vulnerability) (output *notionapi.Page, err error) {
 	databaseId := config.GetStr(config.NOTION_DATABASE)
 
-	vulnerabilityName := strings.TrimSpace(truncateString(vulnerability.Name, 100))
-	vulnerabilityEndpoint := strings.TrimSpace(truncateString(vulnerability.Endpoint, 100))
-
 	pageInsertQuery := &notionapi.PageCreateRequest{
 		Parent: notionapi.Parent{
 			DatabaseID: notionapi.DatabaseID(databaseId),
@@ -92,7 +103,7 @@ func InsertNotionVulnerability(client *notionapi.Client, vulnerability Vulnerabi
 				Title: []notionapi.RichText{
 					{
 						Text: notionapi.Text{
-							Content: vulnerabilityName,
+							Content: vulnerability.Name,
 						},
 					},
 				},
@@ -111,14 +122,9 @@ func InsertNotionVulnerability(client *notionapi.Client, vulnerability Vulnerabi
 				RichText: []notionapi.RichText{
 					{
 						Text: notionapi.Text{
-							Content: vulnerabilityEndpoint,
+							Content: vulnerability.Endpoint,
 						},
 					},
-				},
-			},
-			"CWE ID": notionapi.SelectProperty{
-				Select: notionapi.Option{
-					Name: vulnerability.CWE,
 				},
 			},
 			"Status": notionapi.SelectProperty{
@@ -152,15 +158,4 @@ func UpdateNotionVulnerabilityStatus(client *notionapi.Client, pageId string, st
 		return nil, errors.New(err.Error())
 	}
 	return res, nil
-}
-
-func truncateString(str string, num int) string {
-	bnoden := str
-	if len(str) > num {
-		if num > 3 {
-			num -= 3
-		}
-		bnoden = str[0:num] + "..."
-	}
-	return bnoden
 }
