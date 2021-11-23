@@ -34,7 +34,7 @@ func main() {
 	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 
 	slackToken := config.GetStr(config.SLACK_TOKEN)
-	vulnerabilityHost := config.GetStr(config.HOST)
+	vulnerabilityHost := config.GetStr(config.DAST_WEBSITE)
 
 	rl := ratelimit.New(1)
 
