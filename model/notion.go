@@ -2,7 +2,7 @@ package model
 
 import (
 	"context"
-	"github.com/fadhilthomas/go-code-scanning-reporter/config"
+	"github.com/fadhilthomas/go-zap-reporter/config"
 	"github.com/jomei/notionapi"
 	"github.com/pkg/errors"
 )

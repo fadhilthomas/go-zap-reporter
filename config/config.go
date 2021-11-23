@@ -2,7 +2,7 @@ package config
 
 var base = mergeConfig(
 	fileLocationConfig,
-	hostConfig,
+	dastWebsiteConfig,
 	logLevelConfig,
 	notionDatabaseConfig,
 	notionTokenConfig,
