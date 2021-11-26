@@ -86,6 +86,18 @@ func main() {
 	}
 
 	for _, vulnerability := range removeDuplicate(vulnerabilityList) {
+
+		switch vulnerability.Severity {
+		case "High":
+			summaryReportSeverity.High++
+		case "Medium":
+			summaryReportSeverity.Medium++
+		case "Low":
+			summaryReportSeverity.Low++
+		case "Info":
+			summaryReportSeverity.Info++
+		}
+
 		// check existing vulnerability
 		rl.Take()
 		notionQueryNameResult, err := model.QueryNotionVulnerabilityName(notionDatabase, vulnerability)
