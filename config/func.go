@@ -24,7 +24,6 @@ func GetStr(key string) string {
 	}
 
 	log.Error().Stack().Msg(fmt.Sprintf("%v is empty", key))
-	os.Exit(1)
 
 	return ""
 }
@@ -33,12 +32,10 @@ func GetInt(key string) int {
 	val := GetStr(key)
 	if val == "" {
 		log.Error().Stack().Msg(fmt.Sprintf(`config with key "%s" not found`, key))
-		os.Exit(1)
 	}
 	valInt, err := strconv.Atoi(val)
 	if err != nil {
 		log.Error().Stack().Msg(fmt.Sprintf(`config with key "%s" cannot be used as int (%s)`, key, err))
-		os.Exit(1)
 	}
 	return valInt
 }
@@ -47,12 +44,10 @@ func GetDuration(key string) time.Duration {
 	val := GetStr(key)
 	if val == "" {
 		log.Error().Stack().Msg(fmt.Sprintf(`config with key "%s" not found`, key))
-		os.Exit(1)
 	}
 	valDuration, err := time.ParseDuration(val)
 	if err != nil {
 		log.Error().Stack().Msg(fmt.Sprintf(`config with key "%s" cannot be used as int (%s)`, key, err))
-		os.Exit(1)
 	}
 	return valDuration
 }

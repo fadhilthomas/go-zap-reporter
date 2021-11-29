@@ -35,6 +35,9 @@ func main() {
 
 	slackToken := config.GetStr(config.SLACK_TOKEN)
 	vulnerabilityHost := config.GetStr(config.DAST_WEBSITE)
+	if vulnerabilityHost == "" {
+		vulnerabilityHost = config.GetStr(config.DAST_API_TARGET_URL)
+	}
 
 	rl := ratelimit.New(1)
 
