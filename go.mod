@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/jomei/notionapi v1.6.0
 	github.com/pkg/errors v0.9.1
-	github.com/rs/zerolog v1.26.0
+	github.com/rs/zerolog v1.26.1
 	go.uber.org/ratelimit v0.2.0
 )
 
